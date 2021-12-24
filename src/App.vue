@@ -1,7 +1,7 @@
 <template>
 <div v-if="myshows">
   <ul>
-    <li v-for="name in names" :key="name" :class="{fav:name.isFav}" @click="favToggle(name)">
+    <li v-for="name in filteredName" :key="name" :class="{fav:name.isFav}" @click="favToggle(name)">
       <h1>{{name.book}}</h1>
       <!-- <img v-bind:src="name.imgs" :alt="alt"> -->
       <p>{{name.title}}</p>
@@ -33,6 +33,11 @@ methods: {
   },
   favToggle(name){
     name.isFav = !name.isFav;
+  }
+},
+computed: {
+  filteredName() {
+    return this.names.filter((name)=>name.isFav);
   }
 }
 }
