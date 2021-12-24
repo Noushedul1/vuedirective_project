@@ -1,26 +1,63 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+<div v-if="myshows">
+  <ul>
+    <li v-for="name in names" :key="name" :class="{fav:name.isFav}" @click="favToggle(name)">
+      <h1>{{name.book}}</h1>
+      <!-- <img v-bind:src="name.imgs" :alt="alt"> -->
+      <p>{{name.title}}</p>
+      <p>{{name.alt}}</p>
+    </li>
+  </ul>
+</div>
+  <button @click="changeit" class="btn">
+    <span v-if="myshows">Hide it</span>
+    <span v-else>Open it</span>
+  </button>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
-
 export default {
-  name: 'App',
-  components: {
-    HelloWorld
+data() {
+  return {
+    myshows: true,
+    names: [
+      {book:'the anatomy',title:'the history of anatomy',alt:'this is anatomy',isFav: true},
+      {book:'the biology',title:'the biological demand',alt:'this is biology',isFav: false},
+      {book:'the physics',title:'the physics story',alt:'thsi is physics',isFav: true}
+    ],
   }
+},
+methods: {
+  changeit(){
+    this.myshows = !this.myshows;
+  },
+  favToggle(name){
+    name.isFav = !name.isFav;
+  }
+}
 }
 </script>
 
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+ul li{
+  list-style-type: none;
+  margin: 10px;
+  padding: 20px;
+  border: 1px solid black;
+  border-radius: 10px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+.fav{
+  background: orangered;
+  color: white;
+}
+.btn{
+  border: none;
+  padding: 20px;
+  background: orangered;
+  color: white;
+  width: 100%;
 }
 </style>
